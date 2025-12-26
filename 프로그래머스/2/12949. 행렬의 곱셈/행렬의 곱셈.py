@@ -1,20 +1,17 @@
 def solution(arr1, arr2):
-    # 2차원 행렬 곱을 계산해보자.
     
-    # arr2의 열 분리
-    arr2_cols = list(zip(*arr2)) # 열 추출 [(1, 4), (2, 5), (3, 6)]
+    # 두 행렬의 행, 열 길이
+    r1, c1 = len(arr1), len(arr1[0])
+    r2, c2 = len(arr2), len(arr2[0])
     
-    answer = []
+    # 결과 저장할 2차원 배열 초기화
+    answer = [[0] * c2 for _ in range(r1)] # (r1 x c1) x (r2 x c2) = (r1 x c2)
     
-    for row in arr1:
-        temp_row = []
-        for col in arr2_cols:
-            s = 0
-            # 같은 위치 원소를 하나씩 꺼내서 묶은 후 벡터 내적
-            for a, b in zip(row, col): 
-                s += a * b
-            temp_row.append(s)
-        answer.append(temp_row)
+    # 각 요소 계산
+    for i in range(r1):
+        for j in range(c2):
+            for k in range(c1):
+                answer[i][j] += arr1[i][k] * arr2[k][j]
             
     return answer
 
