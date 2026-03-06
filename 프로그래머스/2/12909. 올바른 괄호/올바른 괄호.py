@@ -5,11 +5,10 @@ def solution(s):
         if c == "(":
             stack.append(c)
         elif c == ")":
-            if not stack:
-                return False
-            else:
+            if stack:
                 stack.pop()
-                
+            else:
+                return False
     if stack:
         return False
     return True
