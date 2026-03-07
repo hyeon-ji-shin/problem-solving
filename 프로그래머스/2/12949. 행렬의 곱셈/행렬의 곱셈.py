@@ -5,7 +5,7 @@ def solution(arr1, arr2):
     r2, c2 = len(arr2), len(arr2[0])
     
     # 결과 저장할 2차원 배열 초기화
-    answer = [[0] * c2 for _ in range(r1)] # (r1 x c1) x (r2 x c2) = (r1 x c2)
+    answer = [[0] * c2 for _ in range(r1)]
     
     # 각 요소 계산
     for i in range(r1):
@@ -14,4 +14,3 @@ def solution(arr1, arr2):
                 answer[i][j] += arr1[i][k] * arr2[k][j]
             
     return answer
-
