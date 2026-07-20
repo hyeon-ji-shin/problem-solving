@@ -20,8 +20,7 @@ def can_go(x,y,cur):
         return False
     return True
 
-dxs = [-1, 1, 0, 0]
-dys = [0, 0, -1, 1]
+dirs = [(-1,0),(1,0),(0,-1),(0,1)]
 
 def bfs(start_r, start_c):
     best_value = -1
@@ -33,34 +32,33 @@ def bfs(start_r, start_c):
     
     visited[start_r][start_c] = True
     q.append((start_r, start_c))
+    start_value = grid[start_r][start_c]
 
     while q:
-        curr_r, curr_c = q.popleft()
-        for dx, dy in zip(dxs, dys):
-            x, y = curr_r + dx, curr_c + dy
+        x, y = q.popleft()
+        for dx, dy in dirs:
+            nx, ny = x + dx, y + dy
 
             # 만약, can_go가 안되면 그냥 loop 탈출하기.
-            if can_go(x, y, grid[start_r][start_c]) and not visited[x][y]:
-                visited[x][y] = True
-                q.append((x, y))
+            if can_go(nx, ny, start_value) and not visited[nx][ny]:
+                visited[nx][ny] = True
+                q.append((nx, ny))
 
                 # queue 중에서 가장 큰 값들을 남김. + 그 값의 위치로 저장하기
                 # queue 중에서 가장 큰 값이 여러개면, 더 작은 행/열 위치에 있는 값으로 현재 위치 바꾸기. + 탐색 수 늘리기.
 
-                if grid[x][y] > best_value:
-                    best_value = grid[x][y]
-                    best_r = x
-                    best_c = y
-                elif grid[x][y] == best_value:
-                    if x < best_r:
-                        best_value = grid[x][y]
-                        best_r = x
-                        best_c = y
-                    elif x == best_r:
-                        if y < best_c:
-                            best_value = grid[x][y]
-                            best_r = x
-                            best_c = y            
+                if grid[nx][ny] > best_value:
+                    best_value = grid[nx][ny]
+                    best_r = nx
+                    best_c = ny
+                elif grid[nx][ny] == best_value:
+                    if nx < best_r:
+                        best_r = nx
+                        best_c = ny
+                    elif nx == best_r:
+                        if ny < best_c:
+                            best_r = nx
+                            best_c = ny            
 
     return best_r, best_c    
 
